@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'home#index'
-  post '/' => "home#generate_categories"
+  post '/' => "home#get_meetups"
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
