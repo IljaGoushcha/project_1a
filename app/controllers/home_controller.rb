@@ -9,15 +9,16 @@ class HomeController < ApplicationController
     state = params["state"]
 
     @categories = {
-      1 => "Arts & Cluture", 3 => "Cars & Motorcycle", 5 => "Dancing", 6 => "Education & Learning",
-      8 => "Fashion/Beauty", 9 => "Fitness", 10 => "Food & Drink", 11 => "Games", 17 => "Lifestyle",
-      18 => "Literature & Writing", 20 => "Movies & Film", 21 => "Music", 23 => "Outdoors & Adventure",
-      26 => "Pets/Animals", 27 => "Photography"
+      1 => "Arts & Cluture", 3 => "Cars & Motorcycle", 5 => "Dancing"
+      # 6 => "Education & Learning",
+      # 8 => "Fashion/Beauty", 9 => "Fitness", 10 => "Food & Drink", 11 => "Games", 17 => "Lifestyle",
+      # 18 => "Literature & Writing", 20 => "Movies & Film", 21 => "Music", 23 => "Outdoors & Adventure",
+      # 26 => "Pets/Animals", 27 => "Photography"
     }
 
-    @results = Array.new
+    @results = Hash.new
     @categories.each do |key, value|
-      @results << HTTParty.get("https://api.meetup.com/2/open_events?&key=#{ENV["MEETUP_API_KEY"]}&sign=true&photo-host=public&state=#{state}&city=#{city}&country=US&category=#{key.to_i}&page=50")["meta"]["count"]
+      @results[value.to_sym] = HTTParty.get("https://api.meetup.com/2/open_events?&key=#{ENV["MEETUP_API_KEY"]}&sign=true&photo-host=public&state=#{state}&city=#{city}&country=US&category=#{key.to_i}&page=100")["meta"]["count"]
     end
 
   end
