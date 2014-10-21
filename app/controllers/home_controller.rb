@@ -5,9 +5,10 @@ class HomeController < ApplicationController
   end
 
   def get_meetups
-    city = params["city"].gsub(" ","+")
+    city1 = params["city"].gsub(" ","+")
+    city2 = params["city"].gsub(" ","_")
     state = params["state"]
-
+    # FIRST, GET MEET_UPS
     @categories = {
       1 => "Arts & Cluture", 3 => "Cars & Motorcycle", 5 => "Dancing"
       # 6 => "Education & Learning",
@@ -16,14 +17,21 @@ class HomeController < ApplicationController
       # 26 => "Pets/Animals", 27 => "Photography"
     }
 
-    @results = Hash.new
+    @meetup_frequencies = Hash.new
     @categories.each do |key, value|
-      @results[value.to_sym] = HTTParty.get("https://api.meetup.com/2/open_events?&key=#{ENV["MEETUP_API_KEY"]}&sign=true&photo-host=public&state=#{state}&city=#{city}&country=US&category=#{key.to_i}&page=100")["meta"]["count"]
+      @meetup_frequencies[value.to_sym] = HTTParty.get("https://api.meetup.com/2/open_events?&key=#{ENV["MEETUP_API_KEY"]}&sign=true&photo-host=public&state=#{state}&city=#{city1}&country=US&category=#{key.to_i}&page=100")["meta"]["count"]
     end
 
+    # GET CURRENT TIME:
+    t = Time.new
+    year = t.year
+    month = t.month
+    day = t.day
+    @date = year.to_s+month.to_s+day.to_s
+    # NOW GET WEATHER:
+    @weather = HTTParty.get("http://api.wunderground.com/api/#{ENV["WUNDERGROUND_API_KEY"]}/history_#{@date}/q/#{state}/#{city2}.json")
   end
-
-
+end
 
     # retiring this request
     # meetups = HTTParty.get("https://api.meetup.com/2/open_events?&key=#{ENV["MEETUP_API_KEY"]}&sign=true&photo-host=public&state=#{state}&city=#{city}&country=US&page=5 0")["results"]
@@ -47,4 +55,3 @@ class HomeController < ApplicationController
     # HTTParty.get("https://api.meetup.com/2/groups?&key=426c7a3d714f70521072414643787210&sign=true&photo-host=public&group_id=7183412&page=1")["results"][0]["category"]
     # HTTParty.get("https://api.meetup.com/2/groups?&key=#{MEETUP_API_KEY}&sign=true&photo-host=public&group_id=6589142&page=20")["results"][0]["category"]
 
-end
