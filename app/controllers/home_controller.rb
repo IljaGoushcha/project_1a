@@ -22,18 +22,23 @@ class HomeController < ApplicationController
       @meetup_frequencies[value.to_sym] = HTTParty.get("https://api.meetup.com/2/open_events?&key=#{ENV["MEETUP_API_KEY"]}&sign=true&photo-host=public&state=#{state}&city=#{city1}&country=US&category=#{key.to_i}&page=100")["meta"]["count"]
     end
 
-    # GET CURRENT TIME:
-    d = Date.today
-    year = d.year.to_s
-    month = d.month.to_s
-    if d.day < 10
-      day = "0"+d.day.to_s
-    else
-      day = d.day.to_s
+    # GET DATES when to get the weather:
+    def get_dates
+      dates = Array.new
+      temp = Array.new(7)
+      todays_date = Date.today
+      temp.map.with_index do |date, i|
+        d = todays_date - 4*i
+        year = d.year.to_s
+        d.month<10 ? month="0"+d.month.to_s : month=d.month.to_s
+        d.day<10 ? day="0"+d.day.to_s : day=d.day.to_s
+        dates << year+month+day
+      end
+      return dates
     end
-    @date = year+month+day
 
     # NOW GET WEATHER: this should work:weather["history"]["observations"][0]["tempm"]
+    @date = get_dates[0]
     @weather = HTTParty.get("http://api.wunderground.com/api/#{ENV["WUNDERGROUND_API_KEY"]}/history_#{@date}/q/#{state}/#{city2}.json")
     # @weather2 = weather["history"]["observations"][0]["tempm"]
     # @avg_t = 0
