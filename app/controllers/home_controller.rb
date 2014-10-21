@@ -28,8 +28,15 @@ class HomeController < ApplicationController
     month = t.month
     day = t.day
     @date = year.to_s+month.to_s+day.to_s
-    # NOW GET WEATHER:
+    # NOW GET WEATHER: this should work:weather["history"]["observations"][0]["tempm"]
     @weather = HTTParty.get("http://api.wunderground.com/api/#{ENV["WUNDERGROUND_API_KEY"]}/history_#{@date}/q/#{state}/#{city2}.json")
+    # @weather2 = weather["history"]["observations"][0]["tempm"]
+    # @avg_t = 0
+    @all_ts = Array.new
+    @weather["history"]["observations"].map do |observation|
+      @all_ts << observation["tempm"]
+    end
+
   end
 end
 
