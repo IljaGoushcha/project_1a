@@ -23,11 +23,16 @@ class HomeController < ApplicationController
     end
 
     # GET CURRENT TIME:
-    t = Time.new
-    year = t.year
-    month = t.month
-    day = t.day
-    @date = year.to_s+month.to_s+day.to_s
+    d = Date.today
+    year = d.year.to_s
+    month = d.month.to_s
+    if d.day < 10
+      day = "0"+d.day.to_s
+    else
+      day = d.day.to_s
+    end
+    @date = year+month+day
+
     # NOW GET WEATHER: this should work:weather["history"]["observations"][0]["tempm"]
     @weather = HTTParty.get("http://api.wunderground.com/api/#{ENV["WUNDERGROUND_API_KEY"]}/history_#{@date}/q/#{state}/#{city2}.json")
     # @weather2 = weather["history"]["observations"][0]["tempm"]
