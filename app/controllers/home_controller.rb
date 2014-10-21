@@ -4,12 +4,17 @@ class HomeController < ApplicationController
     @city = "no city sellected"
   end
 
-  def get_meetups
-    city1 = params["city"].gsub(" ","+")
-    city2 = params["city"].gsub(" ","_")
+  def show_meetups_temperature
+    city = params["city"]
     state = params["state"]
+    @meetups_frequencies = get_meetups_frequencies(city, state)
+  end
+
+  def get_meetups_frequencies(city, state)
+    city1 = city.gsub(" ","+")
+    city2 = city.gsub(" ","_")
     # FIRST, GET MEET_UPS
-    @categories = {
+    categories = {
       1 => "Arts & Cluture", 3 => "Cars & Motorcycle", 5 => "Dancing"
       # 6 => "Education & Learning",
       # 8 => "Fashion/Beauty", 9 => "Fitness", 10 => "Food & Drink", 11 => "Games", 17 => "Lifestyle",
@@ -17,13 +22,29 @@ class HomeController < ApplicationController
       # 26 => "Pets/Animals", 27 => "Photography"
     }
 
-    @meetup_frequencies = Hash.new
-    @categories.each do |key, value|
-      @meetup_frequencies[value.to_sym] = HTTParty.get("https://api.meetup.com/2/open_events?&key=#{ENV["MEETUP_API_KEY"]}&sign=true&photo-host=public&state=#{state}&city=#{city1}&country=US&category=#{key.to_i}&page=100")["meta"]["count"]
+    meetups_frequencies = Hash.new
+    categories.each do |key, value|
+      meetups_frequencies[value.to_sym] = HTTParty.get("https://api.meetup.com/2/open_events?&key=#{ENV["MEETUP_API_KEY"]}&sign=true&photo-host=public&state=#{state}&city=#{city1}&country=US&category=#{key.to_i}&page=100")["meta"]["count"]
     end
+    return meetups_frequencies
+  end
 
-    # GET DATES when to get the weather:
-    def get_dates
+
+  # Returns average temperature accross the month prior to today <h5> <%=@weather["history"]["observations"]%> </h5>
+  def get_avg_temp
+    # his should work:weather["history"]["observations"][0]["tempm"]
+    @date = get_dates[0]
+    @weather = HTTParty.get("http://api.wunderground.com/api/#{ENV["WUNDERGROUND_API_KEY"]}/history_#{@date}/q/#{state}/#{city2}.json")
+    # @weather2 = weather["history"]["observations"][0]["tempm"]
+    # @avg_t = 0
+    @all_ts = Array.new
+    @weather["history"]["observations"].map do |observation|
+      @all_ts << observation["tempm"]
+    end
+  end
+
+  # Returns dates when to get the weather:
+  def get_dates
       dates = Array.new
       temp = Array.new(7)
       todays_date = Date.today
@@ -37,17 +58,6 @@ class HomeController < ApplicationController
       return dates
     end
 
-    # NOW GET WEATHER: this should work:weather["history"]["observations"][0]["tempm"]
-    @date = get_dates[0]
-    @weather = HTTParty.get("http://api.wunderground.com/api/#{ENV["WUNDERGROUND_API_KEY"]}/history_#{@date}/q/#{state}/#{city2}.json")
-    # @weather2 = weather["history"]["observations"][0]["tempm"]
-    # @avg_t = 0
-    @all_ts = Array.new
-    @weather["history"]["observations"].map do |observation|
-      @all_ts << observation["tempm"]
-    end
-
-  end
 end
 
     # retiring this request
