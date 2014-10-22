@@ -7,10 +7,12 @@ class HomeController < ApplicationController
   def show_meetups_temperature
     city = params["city"]
     state = params["state"]
+    date = Date.today
     @city = city
     @meetups_frequencies = get_frequencies_of_meetups(city, state)
     @all_ts = get_avg_temp(city, state)
-    @date = Date.today
+    @single_day_avg_t = get_single_day_avg_t(date, city, state)
+    @date = date
   end
 
   # Returns hash of event categories and number ofscheduled events in each category
@@ -19,7 +21,7 @@ class HomeController < ApplicationController
 
 
     categories = {
-      1 => "Arts & Cluture", 3 => "Cars & Motorcycle", 5 => "Dancing", 6 => "Education & Learning",
+      1 => "Arts & Cluture", 3 => "Cars & Motorcycle", 5 => "Dancing" #, 6 => "Education & Learning",
       # 8 => "Fashion/Beauty", 9 => "Fitness", 10 => "Food & Drink", 11 => "Games", 17 => "Lifestyle",
       # 18 => "Literature & Writing", 20 => "Movies & Film", 21 => "Music", 23 => "Outdoors & Adventure",
       # 26 => "Pets/Animals", 27 => "Photography"
@@ -32,18 +34,51 @@ class HomeController < ApplicationController
     return meetups_frequencies
   end
 
+  def get_single_day_avg_t(date, city, state)
+    city = city.gsub(" ","_")
+
+    single_day_weather = HTTParty.get("http://api.wunderground.com/api/#{ENV["WUNDERGROUND_API_KEY"]}/history_#{date}/q/#{state}/#{city}.json")
+    single_day_ts = Array.new
+    single_day_weather["history"]["observations"].map do |single_day_observation|
+      single_day_ts << single_day_observation["tempm"].to_f
+    end
+
+    single_day_ts_sum = 0
+    single_day_ts.map do |single_day_t|
+      single_day_ts_sum += single_day_t
+    end
+    return single_day_avg_t = single_day_ts_sum/single_day_ts.size
+  end
 
   # Returns average temperature accross the month prior to today <h5> <%=@weather["history"]["observations"]%> </h5>
   def get_avg_temp(city, state)
-    date = get_dates[0]
+    dates = get_dates
     city = city.gsub(" ","_")
-    single_day_weather = HTTParty.get("http://api.wunderground.com/api/#{ENV["WUNDERGROUND_API_KEY"]}/history_#{date}/q/#{state}/#{city}.json")
+    month_ts = Array.new
+    dates.map do |date|
 
-    all_ts = Array.new
-    single_day_weather["history"]["observations"].map do |observation|
-      all_ts << observation["tempm"].to_f
+      single_day_weather = HTTParty.get("http://api.wunderground.com/api/#{ENV["WUNDERGROUND_API_KEY"]}/history_#{date}/q/#{state}/#{city}.json")
+      single_day_ts = Array.new
+      single_day_weather["history"]["observations"].map do |single_day_observation|
+        single_day_ts << single_day_observation["tempm"].to_f
+      end
+
+      single_day_ts_sum = 0
+      single_day_ts.map do |single_day_t|
+        single_day_ts_sum += single_day_t
+      end
+      single_day_avg = single_day_ts_sum/single_day_ts.size
+
+      month_ts << single_day_avg
     end
-    return all_ts
+
+    month_ts_sum = 0
+    month_ts.map do |single_day_t|
+      month_ts_sum += single_day_t
+    end
+    @month_avg = month_ts_sum/month_ts.size
+
+    return @month_avg
   end
 
   # Returns dates when to get the weather:
