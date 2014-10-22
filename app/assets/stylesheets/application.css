@@ -13,3 +13,34 @@
  *= require_tree .
  *= require_self
  */
+body {
+  background-color: #FFFFE8;
+  margin: 8px;
+}
+
+div.authentication {
+  background-color: #E6B800;
+  height: 40px;
+}
+
+div.auth_buttons {
+  background-color: #E4CD70;
+  height: 35px;
+  width: 100px;
+  float: right;
+  margin-top: 5px;
+  margin-right: 7px;
+  text-align: center;
+  padding-top: 12px;
+}
+
+div.auth_buttons .a {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #663300;
+}
+
+div.container {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
