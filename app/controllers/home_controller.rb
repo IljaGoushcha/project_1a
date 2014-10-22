@@ -14,6 +14,7 @@ class HomeController < ApplicationController
     @single_day_avg_t = get_single_day_avg_t(date, city, state)
     @monthly_avg_t = get_avg_monthly_t(dates, city, state)
     @date = date
+
   end
 
   # Returns hash of event categories and number ofscheduled events in each category
@@ -58,7 +59,7 @@ class HomeController < ApplicationController
     month_ts.map do |single_day_avg_t|
       month_ts_sum += single_day_avg_t
     end
-    avg_monthly_t = month_ts_sum/month_ts.size
+    avg_monthly_t = (month_ts_sum/month_ts.size).round(2)
     return avg_monthly_t
   end
 
