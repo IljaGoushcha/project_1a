@@ -1,21 +1,24 @@
 <div class="authentication">
+  <div class="back_button">
+    <%=link_to "BACK", root_path%>
+  </div>
   <% if user_signed_in? %>
     <div class="auth_buttons">
-      <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+      <%= link_to('LOGOUT', destroy_user_session_path, :method => :delete) %>
     </div>
   <% else %>
     <div class="auth_buttons">
-      <%= link_to('Login', new_user_session_path)  %>
+      <%= link_to('LOGIN', new_user_session_path)  %>
     </div>
   <% end %>
 
   <% if user_signed_in? %>
     <div class="auth_buttons">
-      <%= link_to('Profile', edit_user_registration_path) %>
+      <%= link_to('ACCOUNT', edit_user_registration_path) %>
     </div>
   <% else %>
     <div class="auth_buttons">
-      <%= link_to('Register', new_user_registration_path)  %>
+      <%= link_to('SIGN UP', new_user_registration_path)  %>
     </div>
   <% end %>
 </div>

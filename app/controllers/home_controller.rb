@@ -20,8 +20,8 @@ class HomeController < ApplicationController
   def get_frequencies_of_meetups(city, state)
     city = city.gsub(" ","+")
     categories = {
-      1 => "Arts & Cluture", 3 => "Cars & Motorcycle", 5 => "Dancing", 6 => "Education & Learning"
-      # 8 => "Fashion/Beauty", 9 => "Fitness", 10 => "Food & Drink", 11 => "Games", 17 => "Lifestyle"
+      1 => "Arts & Cluture", 3 => "Cars & Motorcycle", 5 => "Dancing"#, 6 => "Education & Learning",
+      # 8 => "Fashion/Beauty", 9 => "Fitness", 10 => "Food & Drink", 11 => "Games", 17 => "Lifestyle",
       # 18 => "Literature & Writing", 20 => "Movies & Film", 21 => "Music", 23 => "Outdoors & Adventure",
       # 26 => "Pets/Animals", 27 => "Photography"
     }

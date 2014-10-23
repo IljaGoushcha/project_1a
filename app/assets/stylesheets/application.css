@@ -23,15 +23,44 @@ div.authentication {
   height: 40px;
 }
 
+div.back_button {
+  background-color: #E4CD70;
+  height: 30px;
+  width: 100px;
+  float: left;
+  margin-top: 5px;
+  margin-left: 7px;
+  text-align: center;
+  padding-top: 12px;
+  border-color: wheat;
+  border-style: solid;
+}
+
+div.back_button:hover {
+  background-color: #ECDC9B;
+}
+
 div.auth_buttons {
   background-color: #E4CD70;
-  height: 35px;
+  height: 30px;
   width: 100px;
   float: right;
   margin-top: 5px;
   margin-right: 7px;
   text-align: center;
   padding-top: 12px;
+  border-color: wheat;
+  border-style: solid;
+}
+
+div.auth_buttons:hover {
+  background-color: #ECDC9B;
+}
+
+a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+  color: cadetblue;
+
 }
 
 div.auth_buttons .a {
