@@ -1,15 +1,14 @@
-<h2> <%=@city%> </h2>
-<h3><%=@date%></h3>
-<h3><%=@monthly_avg_t%> degC</h3>
-<%=link_to "Back", root_path%>
+<div class="meetups">
+  <h2> <%=@city%> </h2>
+  <h5><%=@date%>, <%=@monthly_avg_t%> degC</h5>
 
-<h3>Frequencies of various meet-up categories</h3>
-<ul>
-  <% @frequencies_of_meetups.each do |meetup, frequency| %>
-    <li> <%=meetup%>: <%=frequency%> </li>
-  <% end %>
-</ul>
-
+  <h3>Frequencies of meet-up categories:</h3>
+  <ul>
+    <% @frequencies_of_meetups.each do |meetup, frequency| %>
+      <li> <%=meetup%>: <%=frequency%> </li>
+    <% end %>
+  </ul>
+</div>
 
 
 

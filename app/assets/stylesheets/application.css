@@ -23,7 +23,7 @@ div.authentication {
   height: 40px;
 }
 
-div.back_button {
+div.home_button {
   background-color: #E4CD70;
   height: 30px;
   width: 100px;
@@ -36,7 +36,7 @@ div.back_button {
   border-style: solid;
 }
 
-div.back_button:hover {
+div.home_button:hover {
   background-color: #ECDC9B;
 }
 
@@ -68,8 +68,23 @@ div.auth_buttons .a {
   color: #663300;
 }
 
-div.container {
+div.home_page {
   width: 100%;
   text-align: center;
   margin: 0 auto;
+}
+
+
+
+footer {
+  width: 98%;
+  height: 17px;
+  margin: 8px;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #E6B800;
+  font: small-caption;
+  color: slategray;
 }
