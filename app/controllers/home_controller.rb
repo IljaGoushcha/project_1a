@@ -44,7 +44,8 @@ class HomeController < ApplicationController
     single_day_ts.map do |single_day_t|
       single_day_ts_sum += single_day_t
     end
-    return single_day_avg_t = single_day_ts_sum/10 #single_day_ts.size
+      single_day_ts.size != 0 ? s = single_day_ts.size : s = 12
+    return single_day_avg_t = single_day_ts_sum/s
   end
 
   # Returns average temperature accross the month prior to today <h5> <%=@weather["history"]["observations"]%> </h5>
