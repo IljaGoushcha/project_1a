@@ -68,13 +68,17 @@ div.auth_buttons .a {
   color: #663300;
 }
 
+div.devise_button {
+  padding-top: 10px;
+}
+
 div.home_page {
   width: 100%;
   text-align: center;
   margin: 0 auto;
 }
 
-.test input {
+.state input {
   width: 30px;
 }
 
