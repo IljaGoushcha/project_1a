@@ -74,7 +74,21 @@ div.home_page {
   margin: 0 auto;
 }
 
+.test input {
+  width: 30px;
+}
 
+div.meetups {
+  background-color: #F4E29A;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  margin-top: 30px;
+  border-radius: 7px;
+  border: 3px solid;
+  border-color: wheat;
+}
 
 footer {
   width: 98%;

@@ -5,7 +5,9 @@
     <%= label_tag(:city, "Select city:") %>
     <%= text_field_tag(:city) %>
     <%= label_tag(:state, "Select state:") %>
-    <%= text_field_tag(:state) %>
+    <span class="test">
+      <%= text_field_tag(:state) %>
+    </span>
     <%= submit_tag("Process") %>
   <% end %>
 </div>
