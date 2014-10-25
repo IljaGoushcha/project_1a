@@ -2,14 +2,13 @@
   <h1 class="header">MeetUp Category VS Weather</h1>
 
   <%= form_tag do %>
-    <%= label_tag(:city, "Select city:") %>
-    <%= text_field_tag(:city) %>
-    <%= label_tag(:state, "Select state:") %>
+    <%= text_field_tag(:city, nil, placeholder: "enter city...") %>
     <span class="state">
-
       <%= select_tag :state, options_for_select(us_states) %>
     </span>
-    <%= submit_tag("Process") %>
+    <span class="process">
+      <%= submit_tag("Process") %>
+    </span>
   <% end %>
 </div>
 

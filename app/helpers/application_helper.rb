@@ -2,6 +2,7 @@ module ApplicationHelper
 
   def us_states
     [
+      ['select state...', nil],
       ['Alabama', 'AL'],
       ['Alaska', 'AK'],
       ['Arizona', 'AZ'],
