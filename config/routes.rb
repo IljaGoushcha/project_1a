@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'home#index'
-  post '/' => "home#show_meetups_temperature"
+  post '/' => "city_meetups_t#show_city_meetups_t"
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

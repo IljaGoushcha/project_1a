@@ -28,7 +28,6 @@ class WeatherReport
       single_day_ts_sum += single_day_t
     end
       single_day_ts.size != 0 ? s = single_day_ts.size : s = 12
-      binding.pry
     return single_day_avg_t = single_day_ts_sum/s
   end
 
