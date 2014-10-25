@@ -1,24 +1,35 @@
-<div class="authentication">
-  <div class="home_button">
-    <%=link_to "HOME", root_path%>
-  </div>
-  <% if user_signed_in? %>
-    <div class="auth_buttons">
-      <%= link_to('LOGOUT', destroy_user_session_path, :method => :delete) %>
-    </div>
-  <% else %>
-    <div class="auth_buttons">
-      <%= link_to('LOGIN', new_user_session_path)  %>
-    </div>
-  <% end %>
+<div class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-brand">MeetUps vs Weather</div>
 
-  <% if user_signed_in? %>
-    <div class="auth_buttons">
-      <%= link_to('ACCOUNT', edit_user_registration_path) %>
+    <div class="collapse navbar-collapse navHeaderCollapse">
+
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <li><%= link_to('LOGOUT', destroy_user_session_path, :method => :delete) %></li>
+          <li><%= link_to('ACCOUNT', edit_user_registration_path) %></li>
+        <% else %>
+          <li><%= link_to('LOGIN', new_user_session_path)  %></li>
+          <li><%= link_to('SIGN UP', new_user_registration_path) %></li>
+        <% end %>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-left">
+        <li><%=link_to "HOME", root_path%></li>
+        <li><%=link_to "STATISTICS", root_path%></li>
+      </ul>
+
     </div>
-  <% else %>
-    <div class="auth_buttons">
-      <%= link_to('SIGN UP', new_user_registration_path)  %>
-    </div>
-  <% end %>
+
+  </div>
 </div>
+
+
+
+
+
+
+
+
+
+
